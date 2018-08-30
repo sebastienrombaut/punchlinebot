@@ -7,7 +7,7 @@ Bot.on :message do |message|
   message.reply(text: 'PAS LOUÉ')
   #message.reply(text: 'T\'es là mamene')
 
-  if message.include? 'photo'
+  if message.text.include?('photo' || 'image')
     message.reply(
       attachment: {
         type: 'image',
