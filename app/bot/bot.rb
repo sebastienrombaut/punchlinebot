@@ -21,20 +21,7 @@ Bot.on :message do |message|
 
   message.typing_on
 
-  message.reply(
-    attachment: {
-      type: 'template',
-      payload: {
-        template_type: 'button',
-        text: 'T\'es là mamene, si si ! Qu\'est ce qu\'il te faut pour t\'ambiancer ?',
-        buttons: [
-          { type: 'postback', title: 'Du Saaaal 💩', payload: 'sal' },
-          { type: 'postback', title: 'TMTC ⚡️', payload: 'tmtc' },
-          { type: 'postback', title: 'Du bon teuteu 🌿', payload: 'teuteu' },
-        ]
-      }
-    }
-  )
+  main_menu(message)
 
   # message.reply(
   #   text: 'T\'es là mamene, si si ! Qu\'est ce qu\'il te faut pour t\'ambiancer ?',
@@ -86,20 +73,8 @@ Bot.on :postback do |postback|
 
   sleep(5)
 
-  message.reply(
-    attachment: {
-      type: 'template',
-      payload: {
-        template_type: 'button',
-        text: 'T\'es là mamene, si si ! Qu\'est ce qu\'il te faut pour t\'ambiancer ?',
-        buttons: [
-          { type: 'postback', title: 'Du Saaaal 💩', payload: 'sal' },
-          { type: 'postback', title: 'TMTC ⚡️', payload: 'tmtc' },
-          { type: 'postback', title: 'Du bon teuteu 🌿', payload: 'teuteu' },
-        ]
-      }
-    }
-  )
+  main_menu(postback)
+
   when 'tmtc'
 
     postback.typing_on
@@ -130,20 +105,7 @@ Bot.on :postback do |postback|
 
     sleep(5)
 
-    message.reply(
-      attachment: {
-        type: 'template',
-        payload: {
-          template_type: 'button',
-          text: 'T\'es là mamene, si si ! Qu\'est ce qu\'il te faut pour t\'ambiancer ?',
-          buttons: [
-            { type: 'postback', title: 'Du Saaaal 💩', payload: 'sal' },
-            { type: 'postback', title: 'TMTC ⚡️', payload: 'tmtc' },
-            { type: 'postback', title: 'Du bon teuteu 🌿', payload: 'teuteu' },
-          ]
-        }
-      }
-    )
+    main_menu(postback)
 
   when 'teuteu'
     postback.reply(text: 'Faut suivre l\'empereur pour ça mamene!')
@@ -159,19 +121,23 @@ Bot.on :postback do |postback|
 
     sleep(5)
 
-    message.reply(
-      attachment: {
-        type: 'template',
-        payload: {
-          template_type: 'button',
-          text: 'T\'es là mamene, si si ! Qu\'est ce qu\'il te faut pour t\'ambiancer ?',
-          buttons: [
-            { type: 'postback', title: 'Du Saaaal 💩', payload: 'sal' },
-            { type: 'postback', title: 'TMTC ⚡️', payload: 'tmtc' },
-            { type: 'postback', title: 'Du bon teuteu 🌿', payload: 'teuteu' },
-          ]
-        }
-      }
-    )
+    main_menu(postback)
   end
+end
+
+def main_menu(kind)
+  kind.reply(
+    attachment: {
+      type: 'template',
+      payload: {
+        template_type: 'button',
+        text: 'T\'es là mamene, si si ! Qu\'est ce qu\'il te faut pour t\'ambiancer ?',
+        buttons: [
+          { type: 'postback', title: 'Du Saaaal 💩', payload: 'sal' },
+          { type: 'postback', title: 'TMTC ⚡️', payload: 'tmtc' },
+          { type: 'postback', title: 'Du bon teuteu 🌿', payload: 'teuteu' },
+        ]
+      }
+    }
+  )
 end
