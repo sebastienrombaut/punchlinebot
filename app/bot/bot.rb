@@ -8,6 +8,8 @@ Bot.on :message do |message|
 
   message.reply(text: 'PAS LOUÉ')
 
+  sleep(2)
+
   message.typing_on
 
   main_menu(message)
@@ -21,9 +23,34 @@ Bot.on :message do |message|
         }
       }
     )
+
+    sleep(5)
+
+    main_menu(message)
+
   elsif message.text.include?('bye') || message.text.include?('ciao') || message.text.include?('au revoir')
     message.reply(text: 'Tu vas retrouver de la beurette mamene !')
     message.reply(text: 'Tu le sais mamene')
+
+  elsif message.text.include?('loué') || message.text.include?('poulet') || message.text.include?('LOUÉ')
+    message.reply(text: 'tu l\'aimes ce poulet mamene ?')
+
+    message.typing_on
+
+    sleep(2)
+
+    message.reply(
+      attachment: {
+        type: 'image',
+        payload: {
+          url: 'http://courses.carrefour.fr/static/wlpdatas/display/000/141/765/1417659.jpg'
+        }
+      }
+    )
+
+    sleep(5)
+
+    main_menu(message)
   end
 end
 
