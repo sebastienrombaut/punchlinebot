@@ -76,7 +76,7 @@ Bot.on :postback do |postback|
   when 'sal'
     postback.reply(
       attachment: {
-        type: 'image',
+        type: 'video',
         payload: {
           url: 'https://gph.is/2bjzBvW'
         }
@@ -87,9 +87,11 @@ Bot.on :postback do |postback|
 
     postback.reply(text: 'Tu vois la petite beurette, visualise la bien ..!')
 
-    sleep(2)
+    sleep(4)
 
     postback.reply(text: 'bon tu lui demandes si elle veut un tour de magie, OKLM')
+
+    sleep(2)
 
     postback.reply(text: 'Forcément, ça répond oui et là tu lui lâches, "ok j\'te baise et je disparais"')
 
@@ -98,13 +100,13 @@ Bot.on :postback do |postback|
   when postback.payload == 'teuteu'
     postback.reply(text: 'Faut suivre l\'empereur pour ça mamene!')
 
-    postback.reply(
-      attachment: {
-        type: 'video',
-        payload: {
-          url: 'https://www.youtube.com/watch?v=EjpJYaOQ7MY'
-        }
-      }
-    )
+    # postback.reply(
+    #   attachment: {
+    #     type: 'video',
+    #     payload: {
+    #       url: 'https://www.youtube.com/watch?v=EjpJYaOQ7MY'
+    #     }
+    #   }
+    # )
   end
 end
