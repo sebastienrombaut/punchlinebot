@@ -75,6 +75,10 @@ Bot.on :postback do |postback|
       }
     )
   when postback.payload == 'teuteu'
-    postback.reply(text: 'Faut suivre l\'empereur pour ça mamene!')
+    payload = 'Faut suivre l\'empereur pour ça mamene!'
   end
+
+  postback.reply(
+    text: payload
+  )
 end
