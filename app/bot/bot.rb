@@ -33,7 +33,7 @@ Bot.on :message do |message|
     message.reply(text: 'Tu le sais mamene')
 
   elsif message.text.include?('loué') || message.text.include?('poulet') || message.text.include?('LOUÉ')
-    message.reply(text: 'tu l\'aimes ce poulet mamene ?')
+    message.reply(text: 'tu l\'aimes celui là mamene ?')
 
     message.typing_on
 
