@@ -3,16 +3,16 @@ include Facebook::Messenger
 
 Facebook::Messenger::Subscriptions.subscribe(access_token: ENV["ACCESS_TOKEN"])
 
-Bot.deliver({
-  recipient: {
-    id: '45123'
-  },
-  message: {
-    text: 'T\'es là mamene'
-  },
-  message_type: Facebook::Messenger::Bot::MessagingType::MESSAGE_TAG,
-  tag: Facebook::Messenger::Bot::Tag::NON_PROMOTIONAL_SUBSCRIPTION
-})
+# Bot.deliver({
+#   recipient: {
+#     id: '45123'
+#   },
+#   message: {
+#     text: 'T\'es là mamene'
+#   },
+#   message_type: Facebook::Messenger::Bot::MessagingType::MESSAGE_TAG,
+#   tag: Facebook::Messenger::Bot::Tag::NON_PROMOTIONAL_SUBSCRIPTION
+# })
 
 Bot.on :message do |message|
   #message.reply(text: 'PAS LOUÉ')
@@ -20,7 +20,7 @@ Bot.on :message do |message|
   message.typing_on
 
   message.reply(
-    #text: 'T\'es là mamene',
+    text: 'T\'es là mamene',
     text: 'Qu\'est ce qu\'il te faut pour t\'ambiancer ?',
     quick_replies: [
       {
