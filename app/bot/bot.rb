@@ -32,7 +32,7 @@ Bot.on :message do |message|
     message.reply(text: 'Tu vas retrouver de la beurette mamene !')
     message.reply(text: 'Tu le sais mamene')
 
-  elsif message.text.include?('loué') || message.text.include?('poulet') || message.text.include?('LOUÉ')
+  elsif message.text.include?('fermier') || message.text.include?('poulet')
     message.reply(text: 'tu l\'aimes celui là mamene ?')
 
     message.typing_on
