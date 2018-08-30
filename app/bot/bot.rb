@@ -20,17 +20,26 @@ Bot.on :message do |message|
   message.typing_on
 
   message.reply(
-    text: 'T\'es là mamene',
-    text: 'Qu\'est ce qu\'il te faut pour t\'ambiancer ?',
+    text: 'T\'es là mamene \n Qu\'est ce qu\'il te faut pour t\'ambiancer ?',
     quick_replies: [
       {
         content_type: 'text',
-        title: 'You are!',
-        payload: 'HARMLESS'
+        title: 'Du Saaaal 💩',
+        payload: 'sal'
+      },
+      {
+        content_type: 'text',
+        title: 'TMTC ⚡️',
+        payload: 'tmtc'
+      },
+      {
+        content_type: 'text',
+        title: 'Du bon teuteu 🌿',
+        payload: 'teuteu'
       }
     ]
   )
-  if message.text.include?('photo' || 'image')
+  if message.text.include?('photo') || message.text.include?('image')
     message.reply(
       attachment: {
         type: 'image',
@@ -44,5 +53,33 @@ Bot.on :message do |message|
     message.reply(text: 'Tu le sais mamene')
   end
 
+Bot.on :postback do |postback|
+  postback.sender    # => { 'id' => '1008372609250235' }
+  postback.recipient # => { 'id' => '2015573629214912' }
+  postback.sent_at   # => 2016-04-22 21:30:36 +0200
+  postback.payload   # => 'EXTERMINATE'
+
+  if postback.payload == 'sal'
+    message.reply(
+      attachment: {
+        type: 'image',
+        payload: {
+          url: 'https://gph.is/2bjzBvW'
+        }
+      }
+    )
+  elsif postback.payload == 'tmtc'
+    message.reply(
+      attachment: {
+        type: 'video',
+        payload: {
+          url: 'https://www.youtube.com/watch?v=EjpJYaOQ7MY'
+        }
+      }
+    )
+  elsif postback.payload == 'teuteu'
+    message.reply(text: 'Faut suivre l\'empereur pour ça mamene!')
+  end
+end
 
 end
