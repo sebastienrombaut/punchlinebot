@@ -52,15 +52,12 @@ Bot.on :message do |message|
     message.reply(text: 'Tu vas retrouver de la beurette mamene !')
     message.reply(text: 'Tu le sais mamene')
   end
+end
 
 Bot.on :postback do |postback|
-  postback.sender    # => { 'id' => '1008372609250235' }
-  postback.recipient # => { 'id' => '2015573629214912' }
-  postback.sent_at   # => 2016-04-22 21:30:36 +0200
-  postback.payload   # => 'EXTERMINATE'
-
-  if postback.payload == 'sal'
-    message.reply(
+  case postback.payload
+  when 'sal'
+    postback.reply(
       attachment: {
         type: 'image',
         payload: {
@@ -68,8 +65,8 @@ Bot.on :postback do |postback|
         }
       }
     )
-  elsif postback.payload == 'tmtc'
-    message.reply(
+  when 'tmtc'
+    postback.reply(
       attachment: {
         type: 'video',
         payload: {
@@ -77,9 +74,7 @@ Bot.on :postback do |postback|
         }
       }
     )
-  elsif postback.payload == 'teuteu'
-    message.reply(text: 'Faut suivre l\'empereur pour ça mamene!')
+  when postback.payload == 'teuteu'
+    postback.reply(text: 'Faut suivre l\'empereur pour ça mamene!')
   end
-end
-
 end
