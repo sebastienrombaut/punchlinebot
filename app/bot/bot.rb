@@ -78,11 +78,28 @@ Bot.on :postback do |postback|
       attachment: {
         type: 'image',
         payload: {
-          url: 'https://3.bp.blogspot.com/-j6g85fpE-jQ/WflfeysK4TI/AAAAAAAAElo/QrvFDvZEb_43RzPE9zJMCFnAPVgeCGvDQCLcBGAs/s1600/maxresdefault%2B%252812%2529.jpg'
+          url: 'https://media.giphy.com/media/ADL6Vi425PXUc/giphy.gif'
           #url: 'https://gph.is/2bjzBvW'
         }
       }
     )
+
+  sleep(5)
+
+  message.reply(
+    attachment: {
+      type: 'template',
+      payload: {
+        template_type: 'button',
+        text: 'T\'es là mamene, si si ! Qu\'est ce qu\'il te faut pour t\'ambiancer ?',
+        buttons: [
+          { type: 'postback', title: 'Du Saaaal 💩', payload: 'sal' },
+          { type: 'postback', title: 'TMTC ⚡️', payload: 'tmtc' },
+          { type: 'postback', title: 'Du bon teuteu 🌿', payload: 'teuteu' },
+        ]
+      }
+    }
+  )
   when 'tmtc'
 
     postback.typing_on
@@ -99,20 +116,62 @@ Bot.on :postback do |postback|
 
     sleep(2)
 
-    postback.reply(text: 'Forcément, ça répond oui et là tu lui lâches, "ok j\'te baise et je disparais"')
+    postback.typing_on
+
+    postback.reply(text: 'Forcément, ça répond oui et là tu lui lâches :')
+
+    sleep(2)
+
+    postback.typing_on
+
+    postback.reply(text: '"ok j\'te baise et je disparais"')
 
     postback.reply(text: 'TMTC mamene')
 
-  when postback.payload == 'teuteu'
+    sleep(5)
+
+    message.reply(
+      attachment: {
+        type: 'template',
+        payload: {
+          template_type: 'button',
+          text: 'T\'es là mamene, si si ! Qu\'est ce qu\'il te faut pour t\'ambiancer ?',
+          buttons: [
+            { type: 'postback', title: 'Du Saaaal 💩', payload: 'sal' },
+            { type: 'postback', title: 'TMTC ⚡️', payload: 'tmtc' },
+            { type: 'postback', title: 'Du bon teuteu 🌿', payload: 'teuteu' },
+          ]
+        }
+      }
+    )
+
+  when 'teuteu'
     postback.reply(text: 'Faut suivre l\'empereur pour ça mamene!')
 
-    # postback.reply(
-    #   attachment: {
-    #     type: 'video',
-    #     payload: {
-    #       url: 'https://www.youtube.com/watch?v=EjpJYaOQ7MY'
-    #     }
-    #   }
-    # )
+    postback.reply(
+      attachment: {
+        type: 'video',
+        payload: {
+          url: 'https://www.youtube.com/watch?v=EjpJYaOQ7MY'
+        }
+      }
+    )
+
+    sleep(5)
+
+    message.reply(
+      attachment: {
+        type: 'template',
+        payload: {
+          template_type: 'button',
+          text: 'T\'es là mamene, si si ! Qu\'est ce qu\'il te faut pour t\'ambiancer ?',
+          buttons: [
+            { type: 'postback', title: 'Du Saaaal 💩', payload: 'sal' },
+            { type: 'postback', title: 'TMTC ⚡️', payload: 'tmtc' },
+            { type: 'postback', title: 'Du bon teuteu 🌿', payload: 'teuteu' },
+          ]
+        }
+      }
+    )
   end
 end
