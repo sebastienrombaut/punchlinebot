@@ -76,18 +76,24 @@ Bot.on :postback do |postback|
   when 'sal'
     postback.reply(
       attachment: {
-        type: 'video',
+        type: 'image',
         payload: {
-          url: 'https://gph.is/2bjzBvW'
+          url: 'https://3.bp.blogspot.com/-j6g85fpE-jQ/WflfeysK4TI/AAAAAAAAElo/QrvFDvZEb_43RzPE9zJMCFnAPVgeCGvDQCLcBGAs/s1600/maxresdefault%2B%252812%2529.jpg'
+          #url: 'https://gph.is/2bjzBvW'
         }
       }
     )
   when 'tmtc'
+
+    postback.typing_on
+
     postback.reply(text: 'Parce que c\'est toi, je vais te balancer une vanne de N°10')
 
     postback.reply(text: 'Tu vois la petite beurette, visualise la bien ..!')
 
     sleep(4)
+
+    postback.typing_on
 
     postback.reply(text: 'bon tu lui demandes si elle veut un tour de magie, OKLM')
 
