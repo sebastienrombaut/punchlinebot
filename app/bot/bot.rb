@@ -5,9 +5,9 @@ Facebook::Messenger::Subscriptions.subscribe(access_token: ENV["ACCESS_TOKEN"])
 
 Bot.on :message do |message|
   message.reply(text: 'PAS LOUÉ')
-  message.reply(text: 'T\'es là mamene')
+  #message.reply(text: 'T\'es là mamene')
 
-  if message.include? 'photo' || 'image'
+  if message.include? 'photo'
     message.reply(
       attachment: {
         type: 'image',
