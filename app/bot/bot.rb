@@ -3,10 +3,33 @@ include Facebook::Messenger
 
 Facebook::Messenger::Subscriptions.subscribe(access_token: ENV["ACCESS_TOKEN"])
 
-Bot.on :message do |message|
-  message.reply(text: 'PAS LOUÉ')
-  #message.reply(text: 'T\'es là mamene')
+Bot.deliver({
+  recipient: {
+    id: '45123'
+  },
+  message: {
+    text: 'T\'es là mamene'
+  },
+  message_type: Facebook::Messenger::Bot::MessagingType::MESSAGE_TAG,
+  tag: Facebook::Messenger::Bot::Tag::NON_PROMOTIONAL_SUBSCRIPTION
+})
 
+Bot.on :message do |message|
+  #message.reply(text: 'PAS LOUÉ')
+  #message.reply(text: 'T\'es là mamene')
+  message.typing_on
+
+  message.reply(
+    #text: 'T\'es là mamene',
+    text: 'Qu\'est ce qu\'il te faut pour t\'ambiancer ?',
+    quick_replies: [
+      {
+        content_type: 'text',
+        title: 'You are!',
+        payload: 'HARMLESS'
+      }
+    ]
+  )
   if message.text.include?('photo' || 'image')
     message.reply(
       attachment: {
@@ -20,4 +43,6 @@ Bot.on :message do |message|
     message.reply(text: 'Tu vas retrouver de la beurette mamene !')
     message.reply(text: 'Tu le sais mamene')
   end
+
+
 end
