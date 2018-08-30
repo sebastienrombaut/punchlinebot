@@ -83,11 +83,7 @@ Bot.on :postback do |postback|
       }
     )
   when 'tmtc'
-    message.typing_on
-
     postback.reply(text: 'Parce que c\'est toi, je vais te balancer une vanne de N°10')
-
-    message.typing_on
 
     postback.reply(text: 'Tu vois la petite beurette, visualise la bien ..!')
 
@@ -95,11 +91,7 @@ Bot.on :postback do |postback|
 
     postback.reply(text: 'bon tu lui demandes si elle veut un tour de magie, OKLM')
 
-    message.typing_on
-
     postback.reply(text: 'Forcément, ça répond oui et là tu lui lâches, "ok j\'te baise et je disparais"')
-
-    message.typing_on
 
     postback.reply(text: 'TMTC mamene')
 
