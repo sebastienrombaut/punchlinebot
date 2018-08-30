@@ -16,5 +16,8 @@ Bot.on :message do |message|
         }
       }
     )
+  elsif message.text.include?('bye')
+    message.reply(text: 'Tu vas retrouver de la beurette mamene !')
+    message.reply(text: 'Tu le sais mamene')
   end
 end
