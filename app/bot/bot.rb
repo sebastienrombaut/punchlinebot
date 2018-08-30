@@ -3,17 +3,6 @@ include Facebook::Messenger
 
 Facebook::Messenger::Subscriptions.subscribe(access_token: ENV["ACCESS_TOKEN"])
 
-# Bot.deliver({
-#   recipient: {
-#     id: '45123'
-#   },
-#   message: {
-#     text: 'T\'es là mamene'
-#   },
-#   message_type: Facebook::Messenger::Bot::MessagingType::MESSAGE_TAG,
-#   tag: Facebook::Messenger::Bot::Tag::NON_PROMOTIONAL_SUBSCRIPTION
-# })
-
 Bot.on :message do |message|
   message.typing_on
 
@@ -23,27 +12,7 @@ Bot.on :message do |message|
 
   main_menu(message)
 
-  # message.reply(
-  #   text: 'T\'es là mamene, si si ! Qu\'est ce qu\'il te faut pour t\'ambiancer ?',
-  #   quick_replies: [
-  #     {
-  #       content_type: 'text',
-  #       title: 'Du Saaaal 💩',
-  #       payload: 'sal'
-  #     },
-  #     {
-  #       content_type: 'text',
-  #       title: 'TMTC ⚡️',
-  #       payload: 'tmtc'
-  #     },
-  #     {
-  #       content_type: 'text',
-  #       title: 'Du bon teuteu 🌿',
-  #       payload: 'teuteu'
-  #     }
-  #   ]
-  # )
-  if message.text.include?('photo') || message.text.include?('image')
+  if message.text.include?('photo') || message.text.include?('image') || message.text.include?('empereur')
     message.reply(
       attachment: {
         type: 'image',
@@ -52,7 +21,7 @@ Bot.on :message do |message|
         }
       }
     )
-  elsif message.text.include?('bye')
+  elsif message.text.include?('bye') || message.text.include?('ciao') || message.text.include?('au revoir')
     message.reply(text: 'Tu vas retrouver de la beurette mamene !')
     message.reply(text: 'Tu le sais mamene')
   end
@@ -66,17 +35,21 @@ Bot.on :postback do |postback|
         type: 'image',
         payload: {
           url: 'https://media.giphy.com/media/ADL6Vi425PXUc/giphy.gif'
-          #url: 'https://gph.is/2bjzBvW'
         }
       }
     )
+
+  sleep(3)
+
+  postback.typing_on
+
+  postback.reply(text: 'Cherche pas mamene, c\'est la mienne celle là' )
 
   sleep(5)
 
   main_menu(postback)
 
   when 'tmtc'
-
     postback.typing_on
 
     postback.reply(text: 'Parce que c\'est toi, je vais te balancer une vanne de N°10')
@@ -108,16 +81,43 @@ Bot.on :postback do |postback|
     main_menu(postback)
 
   when 'teuteu'
-    postback.reply(text: 'Faut suivre l\'empereur pour ça mamene!')
+    postback.reply(
+      text: 'Faut suivre l\'empereur pour ça mamene!',
+      quick_replies: [
+        {
+          content_type: 'text',
+          title: 'Montre moi la voie',
+          payload: 'go'
+        },
+        {
+          content_type: 'text',
+          title: 'Oublie !',
+          payload: 'no'
+        },
+      ]
+    )
 
+  when 'go'
     postback.reply(
       attachment: {
-        type: 'video',
+        type: 'image',
         payload: {
-          url: 'https://www.youtube.com/watch?v=EjpJYaOQ7MY'
+          url: 'https://i.ytimg.com/vi/EjpJYaOQ7MY/hqdefault.jpg'
         }
       }
     )
+
+    sleep(5)
+
+    main_menu(postback)
+
+  when 'no'
+    postback.reply(text: 'tu dis ça, parce que j\'ai tiré ta meuf ?')
+
+    postback.typing_on
+    sleep(2)
+
+    postback.reply(text: 'sans rancunes mamene')
 
     sleep(5)
 
