@@ -13,6 +13,7 @@ Bot.on :message do |message|
     pas_loue_message(message, current_user)
     main_menu(message)
     current_user.state = 'main_menu'
+    current_user.save
   else
     main_menu(message)
   end
@@ -31,6 +32,7 @@ Bot.on :message do |message|
 
     sleep(5)
     current_user.state += ' photo'
+    current_user.save
 
     Rails.logger.debug "User state is #{current_user.state.inspect}"
 
@@ -41,6 +43,7 @@ Bot.on :message do |message|
     message.reply(text: 'Tu le sais mamene')
 
     current_user.state = ""
+    current_user.save
 
   elsif (message.text.include?('fermier') || message.text.include?('poulet')) && !current_user.state.include?('poulet')
     message.reply(text: 'tu l\'aimes celui là mamene ?')
@@ -60,6 +63,7 @@ Bot.on :message do |message|
 
     sleep(5)
     current_user.state += ' poulet'
+    current_user.save
 
     main_menu(message)
   end
@@ -86,6 +90,7 @@ Bot.on :postback do |postback|
   sleep(5)
 
   current_user.state += 'sal'
+  current_user.save
 
   main_menu(postback)
 
@@ -119,6 +124,7 @@ Bot.on :postback do |postback|
     sleep(5)
 
     current_user.state += 'tmtc'
+    current_user.save
 
     main_menu(postback)
 
@@ -150,6 +156,7 @@ Bot.on :postback do |postback|
     sleep(5)
 
     current_user.state += 'teuteu'
+    current_user.save
 
     main_menu(postback)
 
@@ -164,6 +171,7 @@ Bot.on :postback do |postback|
     sleep(5)
 
     current_user.state += 'teuteu'
+    current_user.save
 
     main_menu(postback)
   end
