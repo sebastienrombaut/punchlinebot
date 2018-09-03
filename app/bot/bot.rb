@@ -15,7 +15,7 @@ Bot.on :message do |message|
 
   main_menu(message)
 
-  if message.text.include?('photo') || message.text.include?('image') || message.text.include?('empereur') && !current_user.state.include?('photo')
+  if (message.text.include?('photo') || message.text.include?('image') || message.text.include?('empereur')) && !current_user.state.include?('photo')
     message.reply(
       attachment: {
         type: 'image',
@@ -38,7 +38,7 @@ Bot.on :message do |message|
 
     current_user.state = ""
 
-  elsif message.text.include?('fermier') || message.text.include?('poulet') && !current_user.state.include?('photo')
+  elsif (message.text.include?('fermier') || message.text.include?('poulet')) && !current_user.state.include?('poulet')
     message.reply(text: 'tu l\'aimes celui là mamene ?')
 
     message.typing_on
