@@ -70,7 +70,7 @@ Bot.on :message do |message|
 end
 
 Bot.on :postback do |postback|
-  current_user = User.find_by(facebook_id: message.sender['id'])
+  current_user = User.find_by(facebook_id: postback.sender['id'])
 
   case postback.payload
   when 'sal'
