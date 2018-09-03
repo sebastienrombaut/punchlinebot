@@ -68,6 +68,7 @@ Bot.on :message do |message|
     main_menu(message, current_user)
   end
 
+  if !current_user.state.include?('teuteu')
     case message.quick_reply
     when 'go'
       message.reply(
@@ -100,8 +101,8 @@ Bot.on :message do |message|
       current_user.save
 
       main_menu(postback, current_user)
-
     end
+  end
 end
 
 Bot.on :postback do |postback|
