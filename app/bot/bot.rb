@@ -66,6 +66,7 @@ Bot.on :message do |message|
     current_user.save
 
     main_menu(message, current_user)
+  end
 
     case message.quick_reply
     when 'go'
@@ -99,8 +100,8 @@ Bot.on :message do |message|
       current_user.save
 
       main_menu(postback, current_user)
+
     end
-  end
 end
 
 Bot.on :postback do |postback|
