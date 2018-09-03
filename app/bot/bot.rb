@@ -79,10 +79,10 @@ Bot.on :message do |message|
           }
         }
       )
+      current_user.state += 'teuteu'
 
       sleep(5)
 
-      current_user.state += 'teuteu'
       current_user.save
 
       main_menu(postback, current_user)
