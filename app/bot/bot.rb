@@ -3,12 +3,14 @@ include Facebook::Messenger
 
 Facebook::Messenger::Subscriptions.subscribe(access_token: ENV["ACCESS_TOKEN"])
 
-current_user = User.create
-
 Bot.on :message do |message|
-  if current_user.state.blank?
+  if current_user.present? && current_user.state.blank?
     pas_loue_message(message)
     main_menu(message)
+    current_user.state = 'main_menu'
+  else
+    pas_loue_message(message)
+    current_user = User.find_or_create_by(facebook_id: @messaging[:sender=[:id]])
     current_user.state = 'main_menu'
   end
 
