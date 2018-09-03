@@ -131,18 +131,34 @@ Bot.on :postback do |postback|
     main_menu(postback, current_user)
 
   when 'teuteu'
+    # postback.reply(
+    #   attachment: {
+    #     type: 'template',
+    #     payload: {
+    #       template_type: 'button',
+    #       text: 'Faut suivre l\'empereur pour ça mamene!',
+    #       buttons: [
+    #         { type: 'postback', title: 'Montre moi la voie 👍', payload: 'go' },
+    #         { type: 'postback', title: 'Oublie ! 👎', payload: 'no' },
+    #       ]
+    #     }
+    #   }
+    # )
+
     postback.reply(
-      attachment: {
-        type: 'template',
-        payload: {
-          template_type: 'button',
-          text: 'Faut suivre l\'empereur pour ça mamene!',
-          buttons: [
-            { type: 'postback', title: 'Montre moi la voie 👍', payload: 'go' },
-            { type: 'postback', title: 'Oublie ! 👎', payload: 'no' },
-          ]
-        }
-      }
+      text: 'Faut suivre l\'empereur pour ça mamene!',
+      quick_replies: [
+        {
+          content_type: 'text',
+          title: 'Montre moi la voie 👍',
+          payload: 'go',
+        },
+        {
+          content_type: 'text',
+          title: 'Oublie ! 👎',
+          payload: 'no',
+        },
+      ]
     )
 
   when 'go'
