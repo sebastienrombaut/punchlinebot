@@ -160,7 +160,9 @@ Bot.on :postback do |postback|
         },
       ]
     )
+  end
 
+  case postback.quick_reply
   when 'go'
     postback.reply(
       attachment: {
