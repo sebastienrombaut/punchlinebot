@@ -15,7 +15,7 @@ Bot.on :message do |message|
 
   main_menu(message)
 
-  if message.text.include?('photo') || message.text.include?('image') || message.text.include?('empereur')
+  if message.text.include?('photo') || message.text.include?('image') || message.text.include?('empereur') && current_user.state.exclude?('photo')
     message.reply(
       attachment: {
         type: 'image',
@@ -26,6 +26,7 @@ Bot.on :message do |message|
     )
 
     sleep(5)
+    current_user.state += 'photo'
 
     main_menu(message)
 
@@ -33,7 +34,9 @@ Bot.on :message do |message|
     message.reply(text: 'Tu vas retrouver de la beurette mamene !')
     message.reply(text: 'Tu le sais mamene')
 
-  elsif message.text.include?('fermier') || message.text.include?('poulet')
+    current_user.state = ""
+
+  elsif message.text.include?('fermier') || message.text.include?('poulet') && current_user.state.exclude?('poulet')
     message.reply(text: 'tu l\'aimes celui là mamene ?')
 
     message.typing_on
@@ -50,6 +53,7 @@ Bot.on :message do |message|
     )
 
     sleep(5)
+    current_user.state += 'poulet'
 
     main_menu(message)
   end
@@ -143,7 +147,7 @@ Bot.on :postback do |postback|
     postback.typing_on
     sleep(2)
 
-    postback.reply(text: 'sans rancunes mamene')
+    postback.reply(text: 'sans rancune mamene')
 
     sleep(5)
 
