@@ -4,21 +4,21 @@ include Facebook::Messenger
 Facebook::Messenger::Subscriptions.subscribe(access_token: ENV["ACCESS_TOKEN"])
 
 Bot.on :message do |message|
-  # begin current_user
-  # rescue
-  #   current_user = User.find_or_create_by(facebook_id: @messaging[:sender=[:id]])
-  # end
+  begin current_user
+  rescue
+    current_user = User.find_or_create_by(facebook_id: message.sender['id'])
+  end
 
-  # if current_user.state.blank?
-  #   pas_loue_message(message, user)
-  #   main_menu(message)
-  #   current_user.state = 'main_menu'
-  # else
-  #   main_menu(message)
-  # end
-  current_user = User.create
+  if current_user.state.blank?
+    pas_loue_message(message, user)
+    main_menu(message)
+    current_user.state = 'main_menu'
+  else
+    main_menu(message)
+  end
+  # current_user = User.create
 
-  pas_loue_message(message, current_user)
+  # pas_loue_message(message, current_user)
 
   Rails.logger.debug "The last message is #{message.inspect}"
 
