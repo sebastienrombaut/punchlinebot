@@ -4,7 +4,7 @@ include Facebook::Messenger
 Facebook::Messenger::Subscriptions.subscribe(access_token: ENV["ACCESS_TOKEN"])
 
 Bot.on :message do |message|
-  if current_user.present? && current_user.state.blank?
+  if current_user && current_user.state.blank?
     pas_loue_message(message)
     main_menu(message)
     current_user.state = 'main_menu'
