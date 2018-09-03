@@ -4,14 +4,17 @@ include Facebook::Messenger
 Facebook::Messenger::Subscriptions.subscribe(access_token: ENV["ACCESS_TOKEN"])
 
 Bot.on :message do |message|
-  if current_user && current_user.state.blank?
-    pas_loue_message(message)
+  begin current_user
+  rescue
+    current_user = User.find_or_create_by(facebook_id: @messaging[:sender=[:id]])
+  end
+
+  if current_user.state.blank?
+    pas_loue_message(message, user)
     main_menu(message)
     current_user.state = 'main_menu'
   else
-    pas_loue_message(message)
-    current_user = User.find_or_create_by(facebook_id: @messaging[:sender=[:id]])
-    current_user.state = 'main_menu'
+    main_menu(message)
   end
 
   Rails.logger.debug "The last message is #{message.inspect}"
@@ -175,7 +178,7 @@ def main_menu(kind)
   )
 end
 
-def pas_loue_message(message)
+def pas_loue_message(message, user)
   message.typing_on
 
   message.reply(text: 'PAS LOUÉ')
@@ -183,4 +186,6 @@ def pas_loue_message(message)
   sleep(2)
 
   message.typing_on
+
+  user.state = 'main_menu'
 end
