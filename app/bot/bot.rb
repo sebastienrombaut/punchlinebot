@@ -8,12 +8,11 @@ current_user = User.create
 Bot.on :message do |message|
   if current_user.state.blank?
     pas_loue_message(message)
+    main_menu(message)
     current_user.state = 'main_menu'
   end
 
   Rails.logger.debug "The last message is #{message.inspect}"
-
-  main_menu(message)
 
   if (message.text.include?('photo') || message.text.include?('image') || message.text.include?('empereur')) && !current_user.state.include?('photo')
     message.reply(
