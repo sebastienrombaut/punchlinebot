@@ -11,11 +11,11 @@ Bot.on :message do |message|
 
   if current_user.state.blank?
     pas_loue_message(message, current_user)
-    main_menu(message)
+    main_menu(message, current_user)
     current_user.state = 'main_menu'
     current_user.save
   else
-    main_menu(message)
+    main_menu(message, current_user)
   end
 
   Rails.logger.debug "The last message is #{message.inspect}"
@@ -36,7 +36,7 @@ Bot.on :message do |message|
 
     Rails.logger.debug "User state is #{current_user.state.inspect}"
 
-    main_menu(message)
+    main_menu(message, current_user)
 
   elsif message.text.include?('bye') || message.text.include?('ciao') || message.text.include?('au revoir')
     message.reply(text: 'Tu vas retrouver de la beurette mamene !')
@@ -65,7 +65,7 @@ Bot.on :message do |message|
     current_user.state += ' poulet'
     current_user.save
 
-    main_menu(message)
+    main_menu(message, current_user)
   end
 end
 
@@ -94,7 +94,7 @@ Bot.on :postback do |postback|
   current_user.state += 'sal'
   current_user.save
 
-  main_menu(postback)
+  main_menu(postback, current_user)
 
   when 'tmtc'
     postback.typing_on
@@ -128,7 +128,7 @@ Bot.on :postback do |postback|
     current_user.state += 'tmtc'
     current_user.save
 
-    main_menu(postback)
+    main_menu(postback, current_user)
 
   when 'teuteu'
     postback.reply(
@@ -160,7 +160,7 @@ Bot.on :postback do |postback|
     current_user.state += 'teuteu'
     current_user.save
 
-    main_menu(postback)
+    main_menu(postback, current_user)
 
   when 'no'
     postback.reply(text: 'tu dis ça, parce que j\'ai tiré ta meuf ?')
@@ -175,25 +175,36 @@ Bot.on :postback do |postback|
     current_user.state += 'teuteu'
     current_user.save
 
-    main_menu(postback)
+    main_menu(postback, current_user)
   end
 end
 
-def main_menu(kind)
+def main_menu(kind, user)
   kind.reply(
     attachment: {
       type: 'template',
       payload: {
         template_type: 'button',
         text: 'T\'es là mamene, si si ! Qu\'est ce qu\'il te faut pour t\'ambiancer ?',
-        buttons: [
-          { type: 'postback', title: 'Du Saaaal 💩', payload: 'sal' },
-          { type: 'postback', title: 'TMTC ⚡️', payload: 'tmtc' },
-          { type: 'postback', title: 'Du bon teuteu 🌿', payload: 'teuteu' },
-        ]
+        buttons: buttons_payload(current_user)
       }
     }
   )
+end
+
+def buttons_payload(user)
+  if user.state.include?('teuteu')
+    [
+      { type: 'postback', title: 'Du Saaaal 💩', payload: 'sal' },
+      { type: 'postback', title: 'TMTC ⚡️', payload: 'tmtc' },
+    ]
+  else
+    [
+      { type: 'postback', title: 'Du Saaaal 💩', payload: 'sal' },
+      { type: 'postback', title: 'TMTC ⚡️', payload: 'tmtc' },
+      { type: 'postback', title: 'Du bon teuteu 🌿', payload: 'teuteu' },
+    ]
+  end
 end
 
 def pas_loue_message(message, user)
