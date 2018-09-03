@@ -15,7 +15,7 @@ Bot.on :message do |message|
 
   main_menu(message)
 
-  if message.text.include?('photo') || message.text.include?('image') || message.text.include?('empereur') && current_user.state.exclude?('photo')
+  if message.text.include?('photo') || message.text.include?('image') || message.text.include?('empereur') && !current_user.state.include?('photo')
     message.reply(
       attachment: {
         type: 'image',
@@ -26,7 +26,7 @@ Bot.on :message do |message|
     )
 
     sleep(5)
-    current_user.state += 'photo'
+    current_user.state += ' photo'
 
     Rails.logger.debug "User state is #{current_user.state.inspect}"
 
@@ -38,7 +38,7 @@ Bot.on :message do |message|
 
     current_user.state = ""
 
-  elsif message.text.include?('fermier') || message.text.include?('poulet') && current_user.state.exclude?('poulet')
+  elsif message.text.include?('fermier') || message.text.include?('poulet') && !current_user.state.include?('photo')
     message.reply(text: 'tu l\'aimes celui là mamene ?')
 
     message.typing_on
@@ -55,7 +55,7 @@ Bot.on :message do |message|
     )
 
     sleep(5)
-    current_user.state += 'poulet'
+    current_user.state += ' poulet'
 
     main_menu(message)
   end
