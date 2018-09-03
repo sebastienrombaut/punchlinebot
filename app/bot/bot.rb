@@ -66,6 +66,40 @@ Bot.on :message do |message|
     current_user.save
 
     main_menu(message, current_user)
+
+    case message.quick_reply
+    when 'go'
+      postback.reply(
+        attachment: {
+          type: 'image',
+          payload: {
+            url: 'https://i.ytimg.com/vi/EjpJYaOQ7MY/hqdefault.jpg'
+          }
+        }
+      )
+
+      sleep(5)
+
+      current_user.state += 'teuteu'
+      current_user.save
+
+      main_menu(postback, current_user)
+
+    when 'no'
+      postback.reply(text: 'tu dis ça, parce que j\'ai tiré ta meuf ?')
+
+      postback.typing_on
+      sleep(2)
+
+      postback.reply(text: 'sans rancune mamene')
+
+      sleep(5)
+
+      current_user.state += 'teuteu'
+      current_user.save
+
+      main_menu(postback, current_user)
+    end
   end
 end
 
@@ -162,39 +196,6 @@ Bot.on :postback do |postback|
     )
   end
 
-  case postback.quick_reply
-  when 'go'
-    postback.reply(
-      attachment: {
-        type: 'image',
-        payload: {
-          url: 'https://i.ytimg.com/vi/EjpJYaOQ7MY/hqdefault.jpg'
-        }
-      }
-    )
-
-    sleep(5)
-
-    current_user.state += 'teuteu'
-    current_user.save
-
-    main_menu(postback, current_user)
-
-  when 'no'
-    postback.reply(text: 'tu dis ça, parce que j\'ai tiré ta meuf ?')
-
-    postback.typing_on
-    sleep(2)
-
-    postback.reply(text: 'sans rancune mamene')
-
-    sleep(5)
-
-    current_user.state += 'teuteu'
-    current_user.save
-
-    main_menu(postback, current_user)
-  end
 end
 
 def main_menu(kind, user)
