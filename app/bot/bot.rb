@@ -10,15 +10,12 @@ Bot.on :message do |message|
   end
 
   if current_user.state.blank?
-    pas_loue_message(message, user)
+    pas_loue_message(message, current_user)
     main_menu(message)
     current_user.state = 'main_menu'
   else
     main_menu(message)
   end
-  # current_user = User.create
-
-  # pas_loue_message(message, current_user)
 
   Rails.logger.debug "The last message is #{message.inspect}"
 
