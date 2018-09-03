@@ -3,6 +3,8 @@ include Facebook::Messenger
 
 Facebook::Messenger::Subscriptions.subscribe(access_token: ENV["ACCESS_TOKEN"])
 
+#current_user = User.create
+
 Bot.on :message do |message|
   message.typing_on
 
@@ -23,6 +25,7 @@ Bot.on :message do |message|
         }
       }
     )
+  logger.debug "The last message is #{message.inspect}"
 
     sleep(5)
 

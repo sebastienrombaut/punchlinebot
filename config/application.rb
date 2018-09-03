@@ -12,5 +12,7 @@ module BotMessenger
     config.load_defaults 5.1
     config.paths.add File.join('app', 'bot'), glob: File.join('**', '*.rb')
     config.autoload_paths += Dir[Rails.root.join('app', 'bot', '*')]
+    config.logger = Logger.new(STDOUT)
+    config.log_level = 0
   end
 end
