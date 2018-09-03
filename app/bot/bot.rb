@@ -85,7 +85,7 @@ Bot.on :message do |message|
 
       current_user.save
 
-      main_menu(postback, current_user)
+      main_menu(message, current_user)
 
     when 'no'
       message.reply(text: 'tu dis ça, parce que j\'ai tiré ta meuf ?')
@@ -100,7 +100,7 @@ Bot.on :message do |message|
       current_user.state += 'teuteu'
       current_user.save
 
-      main_menu(postback, current_user)
+      main_menu(message, current_user)
     end
   end
 end
