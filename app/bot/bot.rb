@@ -14,7 +14,7 @@ Bot.on :message do |message|
 
   message.typing_on
 
-  logger.debug "The last message is #{message.inspect}"
+  Rails.logger.debug "The last message is #{message.inspect}"
 
   main_menu(message)
 
