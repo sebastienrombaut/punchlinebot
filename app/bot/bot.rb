@@ -3,16 +3,13 @@ include Facebook::Messenger
 
 Facebook::Messenger::Subscriptions.subscribe(access_token: ENV["ACCESS_TOKEN"])
 
-#current_user = User.create
+current_user = User.create
 
 Bot.on :message do |message|
-  message.typing_on
-
-  message.reply(text: 'PAS LOUÉ')
-
-  sleep(2)
-
-  message.typing_on
+  if current_user.state.blank?
+    pas_loue_message(message)
+    current_user.state = 'main_menu'
+  end
 
   Rails.logger.debug "The last message is #{message.inspect}"
 
@@ -169,4 +166,14 @@ def main_menu(kind)
       }
     }
   )
+end
+
+def pas_loue_message(message)
+  message.typing_on
+
+  message.reply(text: 'PAS LOUÉ')
+
+  sleep(2)
+
+  message.typing_on
 end
