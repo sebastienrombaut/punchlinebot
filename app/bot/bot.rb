@@ -14,8 +14,6 @@ Bot.on :message do |message|
     main_menu(message, current_user)
     current_user.state = 'main_menu'
     current_user.save
-  elsif !current_user.state.include?('teuteu')
-    main_menu(message, current_user)
   end
 
   Rails.logger.debug "The last message is #{message.inspect}"
@@ -197,7 +195,6 @@ Bot.on :postback do |postback|
       ]
     )
   end
-
 end
 
 def main_menu(kind, user)
