@@ -28,6 +28,8 @@ Bot.on :message do |message|
     sleep(5)
     current_user.state += 'photo'
 
+    Rails.logger.debug "User state is #{current_user.state.inspect}"
+
     main_menu(message)
 
   elsif message.text.include?('bye') || message.text.include?('ciao') || message.text.include?('au revoir')
