@@ -14,7 +14,7 @@ Bot.on :message do |message|
     main_menu(message, current_user)
     current_user.state = 'main_menu'
     current_user.save
-  else
+  elsif !current_user.state.include?('teuteu')
     main_menu(message, current_user)
   end
 
