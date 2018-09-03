@@ -85,6 +85,8 @@ Bot.on :postback do |postback|
 
   sleep(5)
 
+  current_user.state += 'sal'
+
   main_menu(postback)
 
   when 'tmtc'
@@ -116,6 +118,8 @@ Bot.on :postback do |postback|
 
     sleep(5)
 
+    current_user.state += 'tmtc'
+
     main_menu(postback)
 
   when 'teuteu'
@@ -145,6 +149,8 @@ Bot.on :postback do |postback|
 
     sleep(5)
 
+    current_user.state += 'teuteu'
+
     main_menu(postback)
 
   when 'no'
@@ -156,6 +162,8 @@ Bot.on :postback do |postback|
     postback.reply(text: 'sans rancune mamene')
 
     sleep(5)
+
+    current_user.state += 'teuteu'
 
     main_menu(postback)
   end
