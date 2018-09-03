@@ -69,7 +69,7 @@ Bot.on :message do |message|
 
     case message.quick_reply
     when 'go'
-      postback.reply(
+      message.reply(
         attachment: {
           type: 'image',
           payload: {
@@ -86,12 +86,12 @@ Bot.on :message do |message|
       main_menu(postback, current_user)
 
     when 'no'
-      postback.reply(text: 'tu dis ça, parce que j\'ai tiré ta meuf ?')
+      message.reply(text: 'tu dis ça, parce que j\'ai tiré ta meuf ?')
 
       postback.typing_on
       sleep(2)
 
-      postback.reply(text: 'sans rancune mamene')
+      message.reply(text: 'sans rancune mamene')
 
       sleep(5)
 
