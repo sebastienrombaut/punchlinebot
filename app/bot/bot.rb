@@ -186,7 +186,7 @@ def main_menu(kind, user)
       payload: {
         template_type: 'button',
         text: 'T\'es là mamene, si si ! Qu\'est ce qu\'il te faut pour t\'ambiancer ?',
-        buttons: buttons_payload(current_user)
+        buttons: buttons_payload(user)
       }
     }
   )
