@@ -10,8 +10,10 @@ Bot.on :message do |message|
   end
 
   if current_user.state.blank?
-    pas_loue_message(message, current_user)
-    main_menu(message, current_user)
+    IncomingMessage.new.pas_loue(message, current_user)
+    IncomingMessage.new.main_menu(message, current_user)
+    # pas_loue_message(message, current_user)
+    # main_menu(message, current_user)
     current_user.state = 'main_menu'
     current_user.save
   end
@@ -63,7 +65,7 @@ Bot.on :message do |message|
     current_user.state += ' poulet'
     current_user.save
 
-    main_menu(message, current_user)
+    IncomingMessage.new.main_menu(message, current_user)
   end
 
   if !current_user.state.include?('teuteu')
@@ -83,7 +85,7 @@ Bot.on :message do |message|
 
       current_user.save
 
-      main_menu(message, current_user)
+      IncomingMessage.new.main_menu(message, current_user)
 
     when 'no'
       message.reply(text: 'tu dis ça, parce que j\'ai tiré ta meuf ?')
@@ -98,7 +100,7 @@ Bot.on :message do |message|
       current_user.state += 'teuteu'
       current_user.save
 
-      main_menu(message, current_user)
+      IncomingMessage.new.main_menu(message, current_user)
     end
   end
 end
@@ -165,20 +167,6 @@ Bot.on :postback do |postback|
     main_menu(postback, current_user)
 
   when 'teuteu'
-    # postback.reply(
-    #   attachment: {
-    #     type: 'template',
-    #     payload: {
-    #       template_type: 'button',
-    #       text: 'Faut suivre l\'empereur pour ça mamene!',
-    #       buttons: [
-    #         { type: 'postback', title: 'Montre moi la voie 👍', payload: 'go' },
-    #         { type: 'postback', title: 'Oublie ! 👎', payload: 'no' },
-    #       ]
-    #     }
-    #   }
-    # )
-
     postback.reply(
       text: 'Faut suivre l\'empereur pour ça mamene!',
       quick_replies: [
@@ -210,29 +198,29 @@ def main_menu(kind, user)
   )
 end
 
-def buttons_payload(user)
-  if user.state.include?('teuteu')
-    [
-      { type: 'postback', title: 'Du Saaaal 💩', payload: 'sal' },
-      { type: 'postback', title: 'TMTC ⚡️', payload: 'tmtc' },
-    ]
-  else
-    [
-      { type: 'postback', title: 'Du Saaaal 💩', payload: 'sal' },
-      { type: 'postback', title: 'TMTC ⚡️', payload: 'tmtc' },
-      { type: 'postback', title: 'Du bon teuteu 🌿', payload: 'teuteu' },
-    ]
-  end
-end
+# def buttons_payload(user)
+#   if user.state.include?('teuteu')
+#     [
+#       { type: 'postback', title: 'Du Saaaal 💩', payload: 'sal' },
+#       { type: 'postback', title: 'TMTC ⚡️', payload: 'tmtc' },
+#     ]
+#   else
+#     [
+#       { type: 'postback', title: 'Du Saaaal 💩', payload: 'sal' },
+#       { type: 'postback', title: 'TMTC ⚡️', payload: 'tmtc' },
+#       { type: 'postback', title: 'Du bon teuteu 🌿', payload: 'teuteu' },
+#     ]
+#   end
+# end
 
-def pas_loue_message(message, user)
-  message.typing_on
+# def pas_loue_message(message, user)
+#   message.typing_on
 
-  message.reply(text: 'PAS LOUÉ')
+#   message.reply(text: 'PAS LOUÉ')
 
-  sleep(2)
+#   sleep(2)
 
-  message.typing_on
+#   message.typing_on
 
-  user.state = 'main_menu'
-end
+#   user.state = 'main_menu'
+# end
