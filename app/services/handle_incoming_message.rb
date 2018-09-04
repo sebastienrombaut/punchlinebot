@@ -25,58 +25,58 @@ attr_reader :message
   private
 
   def intro_message(out_going_message, user)
-    if current_user.state.blank?
+    if user.state.blank?
       out_going_message.deliver(:pas_loue)
       out_going_message.deliver(:main_menu)
 
-      current_user.state = 'main_menu'
-      current_user.save
+      user.state = 'main_menu'
+      user.save
     end
   end
 
   def interceptor_message(out_going_message, user)
-    if (message.text.include?('photo') || message.text.include?('image') || message.text.include?('empereur')) && !current_user.state.include?('photo')
+    if (message.text.include?('photo') || message.text.include?('image') || message.text.include?('empereur')) && !user.state.include?('photo')
       out_going_message.deliver(:photo)
 
-      current_user.state += ' photo'
-      current_user.save
+      user.state += ' photo'
+      user.save
 
-      Rails.logger.debug "User state is #{current_user.state.inspect}"
+      Rails.logger.debug "User state is #{user.state.inspect}"
 
       out_going_message.deliver(:main_menu)
 
     elsif message.text.include?('bye') || message.text.include?('ciao') || message.text.include?('au revoir')
       out_going_message.deliver(:good_bye_messages)
 
-      current_user.state = ""
-      current_user.save
+      user.state = ""
+      user.save
 
-    elsif (message.text.include?('fermier') || message.text.include?('poulet')) && !current_user.state.include?('poulet')
+    elsif (message.text.include?('fermier') || message.text.include?('poulet')) && !user.state.include?('poulet')
       out_going_message.deliver(:poulet)
 
-      current_user.state += ' poulet'
-      current_user.save
+      user.state += ' poulet'
+      user.save
 
       out_going_message.deliver(:main_menu)
     end
   end
 
   def teuteu_message(out_going_message, user)
-    if !current_user.state.include?('teuteu')
+    if !user.state.include?('teuteu')
       case message.quick_reply
       when 'go'
         out_going_message.deliver(:go_teuteu)
 
-        current_user.state += 'teuteu'
-        current_user.save
+        user.state += 'teuteu'
+        user.save
 
         out_going_message.deliver(:main_menu)
 
       when 'no'
         out_going_message.deliver(:no_teuteu)
 
-        current_user.state += 'teuteu'
-        current_user.save
+        user.state += 'teuteu'
+        user.save
 
         out_going_message.deliver(:main_menu)
       end
