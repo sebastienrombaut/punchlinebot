@@ -4,16 +4,17 @@ include Facebook::Messenger
 Facebook::Messenger::Subscriptions.subscribe(access_token: ENV["ACCESS_TOKEN"])
 
 Bot.on :message do |message|
+  out_going_message = OutgoingMessage.new(message, current_user)
+
   begin current_user
   rescue
     current_user = FindOrCreateUser.new.perform(message.sender['id'])
   end
 
   if current_user.state.blank?
-    IncomingMessage.new.pas_loue(message, current_user)
-    IncomingMessage.new.main_menu(message, current_user)
-    # pas_loue_message(message, current_user)
-    # main_menu(message, current_user)
+    out_going_message.deliver(:pas_loue)
+    out_going_message.deliver(:main_menu)
+
     current_user.state = 'main_menu'
     current_user.save
   end
@@ -39,8 +40,7 @@ Bot.on :message do |message|
     main_menu(message, current_user)
 
   elsif message.text.include?('bye') || message.text.include?('ciao') || message.text.include?('au revoir')
-    message.reply(text: 'Tu vas retrouver de la beurette mamene !')
-    message.reply(text: 'Tu le sais mamene')
+    out_going_message.deliver(:good_bye_messages)
 
     current_user.state = ""
     current_user.save
@@ -65,7 +65,7 @@ Bot.on :message do |message|
     current_user.state += ' poulet'
     current_user.save
 
-    IncomingMessage.new.main_menu(message, current_user)
+    out_going_message.deliver(:main_menu)
   end
 
   if !current_user.state.include?('teuteu')
@@ -85,12 +85,12 @@ Bot.on :message do |message|
 
       current_user.save
 
-      IncomingMessage.new.main_menu(message, current_user)
+      out_going_message.deliver(:main_menu)
 
     when 'no'
       message.reply(text: 'tu dis ça, parce que j\'ai tiré ta meuf ?')
 
-      postback.typing_on
+      message.typing_on
       sleep(2)
 
       message.reply(text: 'sans rancune mamene')
@@ -100,13 +100,14 @@ Bot.on :message do |message|
       current_user.state += 'teuteu'
       current_user.save
 
-      IncomingMessage.new.main_menu(message, current_user)
+      out_going_message.deliver(:main_menu)
     end
   end
 end
 
 Bot.on :postback do |postback|
-  current_user = User.find_by(facebook_id: postback.sender['id'])
+  current_user = FindOrCreateUser.new.perform(postback.sender['id'])
+  out_going_message = OutgoingMessage.new(postback, current_user)
 
   case postback.payload
   when 'sal'
@@ -130,7 +131,9 @@ Bot.on :postback do |postback|
   current_user.state += 'sal'
   current_user.save
 
-  main_menu(postback, current_user)
+  out_going_message.deliver(:main_menu)
+
+  #main_menu(postback, current_user)
 
   when 'tmtc'
     postback.typing_on
@@ -164,7 +167,7 @@ Bot.on :postback do |postback|
     current_user.state += 'tmtc'
     current_user.save
 
-    main_menu(postback, current_user)
+    out_going_message.deliver(:main_menu)
 
   when 'teuteu'
     postback.reply(
@@ -185,18 +188,18 @@ Bot.on :postback do |postback|
   end
 end
 
-def main_menu(kind, user)
-  kind.reply(
-    attachment: {
-      type: 'template',
-      payload: {
-        template_type: 'button',
-        text: 'T\'es là mamene, si si ! Qu\'est ce qu\'il te faut pour t\'ambiancer ?',
-        buttons: buttons_payload(user)
-      }
-    }
-  )
-end
+# def main_menu(kind, user)
+#   kind.reply(
+#     attachment: {
+#       type: 'template',
+#       payload: {
+#         template_type: 'button',
+#         text: 'T\'es là mamene, si si ! Qu\'est ce qu\'il te faut pour t\'ambiancer ?',
+#         buttons: buttons_payload(user)
+#       }
+#     }
+#   )
+# end
 
 # def buttons_payload(user)
 #   if user.state.include?('teuteu')

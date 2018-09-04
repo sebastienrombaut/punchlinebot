@@ -1,5 +1,19 @@
-class IncomingMessage
-  def main_menu(message, user)
+class OutgoingMessage
+attr_reader :message,
+  :user
+
+  def initialize(message, user)
+    @user = user
+    @message = message
+  end
+
+  def deliver(method)
+    send(method)
+  end
+
+  private
+
+  def main_menu
     message.reply(
       attachment: {
         type: 'template',
@@ -12,7 +26,7 @@ class IncomingMessage
     )
   end
 
-  def pas_loue(message, user)
+  def pas_loue
     message.typing_on
 
     message.reply(text: 'PAS LOUÉ')
@@ -24,9 +38,12 @@ class IncomingMessage
     user.state = 'main_menu'
   end
 
-  private
+  def good_bye_messages
+    message.reply(text: 'Tu vas retrouver de la beurette mamene !')
+    message.reply(text: 'Tu le sais mamene')
+  end
 
-  def buttons_payload(user)
+  def buttons_payload
     if user.state.include?('teuteu')
       [
         { type: 'postback', title: 'Du Saaaal 💩', payload: 'sal' },
@@ -40,5 +57,4 @@ class IncomingMessage
       ]
     end
   end
-
 end
