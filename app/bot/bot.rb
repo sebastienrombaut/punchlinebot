@@ -4,12 +4,12 @@ include Facebook::Messenger
 Facebook::Messenger::Subscriptions.subscribe(access_token: ENV["ACCESS_TOKEN"])
 
 Bot.on :message do |message|
-  out_going_message = OutgoingMessage.new(message, current_user)
-
   begin current_user
   rescue
     current_user = FindOrCreateUser.new.perform(message.sender['id'])
   end
+
+  out_going_message = OutgoingMessage.new(message, current_user)
 
   if current_user.state.blank?
     out_going_message.deliver(:pas_loue)
