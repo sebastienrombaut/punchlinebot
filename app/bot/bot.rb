@@ -8,5 +8,5 @@ Bot.on :message do |message|
 end
 
 Bot.on :postback do |postback|
-  HandleIncomingMessage.new(postback).perform
+  HandleIncomingPostback.new(postback).perform
 end
