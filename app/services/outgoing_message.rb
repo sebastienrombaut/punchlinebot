@@ -22,6 +22,10 @@ attr_reader :message,
 
     message.typing_on
 
+    message.reply(text: 'J\'te propose un petit jeu mamene, essaye de trouver la faille pour intégrer la team du sal !')
+
+    sleep(2)
+
     user.state = 'main_menu'
   end
 
@@ -110,6 +114,11 @@ attr_reader :message,
 
   def malin
     message.reply(text: 't\'es un petit malin mamene, allez je te recrute dans la team du sal')
+
+    message.typing_on
+    sleep(2)
+
+    message.reply(text: 'A nous les petites beurettes ! 💃')
   end
 
   def sal

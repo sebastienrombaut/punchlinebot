@@ -64,10 +64,6 @@ Bot.on :message do |message|
 
       out_going_message.deliver(:main_menu)
     end
-  else
-    out_going_message.deliver(:malin)
-
-    out_going_message.deliver(:main_menu)
   end
 end
 
@@ -93,6 +89,10 @@ Bot.on :postback do |postback|
     out_going_message.deliver(:main_menu)
 
   when 'teuteu'
-    out_going_message.deliver(:teuteu)
+    if !current_user.state.include?('teuteu')
+      out_going_message.deliver(:teuteu)
+    else
+      out_going_message.deliver(:malin)
+    end
   end
 end
