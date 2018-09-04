@@ -13,6 +13,18 @@ attr_reader :message
 
     out_going_message = OutgoingMessage.new(message, current_user)
 
+    intro_message(out_going_message, current_user)
+
+    Rails.logger.debug "The last message is #{message.inspect}"
+
+    interceptor_message(out_going_message, current_user)
+
+    teuteu_message(out_going_message, current_user)
+  end
+
+  private
+
+  def intro_message(out_going_message, user)
     if current_user.state.blank?
       out_going_message.deliver(:pas_loue)
       out_going_message.deliver(:main_menu)
@@ -20,9 +32,9 @@ attr_reader :message
       current_user.state = 'main_menu'
       current_user.save
     end
+  end
 
-    Rails.logger.debug "The last message is #{message.inspect}"
-
+  def interceptor_message(out_going_message, user)
     if (message.text.include?('photo') || message.text.include?('image') || message.text.include?('empereur')) && !current_user.state.include?('photo')
       out_going_message.deliver(:photo)
 
@@ -47,7 +59,9 @@ attr_reader :message
 
       out_going_message.deliver(:main_menu)
     end
+  end
 
+  def teuteu_message(out_going_message, user)
     if !current_user.state.include?('teuteu')
       case message.quick_reply
       when 'go'

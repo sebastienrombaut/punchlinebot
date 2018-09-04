@@ -66,6 +66,9 @@ attr_reader :message,
         }
       }
     )
+    sleep(2)
+
+    message.reply(text: 'oé je suis champion du monde ma gueule')
 
     sleep(5)
   end
