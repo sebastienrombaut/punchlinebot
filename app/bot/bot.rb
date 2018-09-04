@@ -6,7 +6,7 @@ Facebook::Messenger::Subscriptions.subscribe(access_token: ENV["ACCESS_TOKEN"])
 Bot.on :message do |message|
   begin current_user
   rescue
-    current_user = User.find_or_create_by(facebook_id: message.sender['id'])
+    current_user = FindOrCreateUser.new.perform(message.sender['id'])
   end
 
   if current_user.state.blank?
