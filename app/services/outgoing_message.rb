@@ -43,7 +43,7 @@ attr_reader :message,
     message.reply(text: 'Tu le sais mamene')
   end
 
-  def buttons_payload
+  def buttons_payload(user)
     if user.state.include?('teuteu')
       [
         { type: 'postback', title: 'Du Saaaal 💩', payload: 'sal' },
