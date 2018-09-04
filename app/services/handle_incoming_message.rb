@@ -35,7 +35,7 @@ attr_reader :message
   end
 
   def interceptor_message(out_going_message, user)
-    if (message.text.include?('photo') || message.text.include?('image') || message.text.include?('empereur')) && !user.state.include?('photo')
+    if (out_going_message.text.include?('photo') || out_going_message.text.include?('image') || out_going_message.text.include?('empereur')) && !user.state.include?('photo')
       out_going_message.deliver(:photo)
 
       user.state += ' photo'
@@ -45,13 +45,13 @@ attr_reader :message
 
       out_going_message.deliver(:main_menu)
 
-    elsif message.text.include?('bye') || message.text.include?('ciao') || message.text.include?('au revoir')
+    elsif out_going_message.text.include?('bye') || out_going_message.text.include?('ciao') || out_going_message.text.include?('au revoir')
       out_going_message.deliver(:good_bye_messages)
 
       user.state = ""
       user.save
 
-    elsif (message.text.include?('fermier') || message.text.include?('poulet')) && !user.state.include?('poulet')
+    elsif (out_going_message.text.include?('fermier') || out_going_message.text.include?('poulet')) && !user.state.include?('poulet')
       out_going_message.deliver(:poulet)
 
       user.state += ' poulet'
@@ -63,7 +63,7 @@ attr_reader :message
 
   def teuteu_message(out_going_message, user)
     if !user.state.include?('teuteu')
-      case message.quick_reply
+      case out_going_message.quick_reply
       when 'go'
         out_going_message.deliver(:go_teuteu)
 
