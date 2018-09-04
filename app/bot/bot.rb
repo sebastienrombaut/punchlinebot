@@ -22,22 +22,14 @@ Bot.on :message do |message|
   Rails.logger.debug "The last message is #{message.inspect}"
 
   if (message.text.include?('photo') || message.text.include?('image') || message.text.include?('empereur')) && !current_user.state.include?('photo')
-    message.reply(
-      attachment: {
-        type: 'image',
-        payload: {
-          url: 'https://cdn-s-www.lalsace.fr/images/23ca079d-9727-4c69-96e8-0b5d49c75544/BES_06/illustration-lorenzo-salad-tomat-onion_1-1522766737.jpg'
-        }
-      }
-    )
+    out_going_message.deliver(:photo)
 
-    sleep(5)
     current_user.state += ' photo'
     current_user.save
 
     Rails.logger.debug "User state is #{current_user.state.inspect}"
 
-    main_menu(message, current_user)
+    out_going_message.deliver(:main_menu)
 
   elsif message.text.include?('bye') || message.text.include?('ciao') || message.text.include?('au revoir')
     out_going_message.deliver(:good_bye_messages)
@@ -46,22 +38,8 @@ Bot.on :message do |message|
     current_user.save
 
   elsif (message.text.include?('fermier') || message.text.include?('poulet')) && !current_user.state.include?('poulet')
-    message.reply(text: 'tu l\'aimes celui là mamene ?')
+    out_going_message.deliver(:poulet)
 
-    message.typing_on
-
-    sleep(2)
-
-    message.reply(
-      attachment: {
-        type: 'image',
-        payload: {
-          url: 'http://courses.carrefour.fr/static/wlpdatas/display/000/141/765/1417659.jpg'
-        }
-      }
-    )
-
-    sleep(5)
     current_user.state += ' poulet'
     current_user.save
 
@@ -71,31 +49,15 @@ Bot.on :message do |message|
   if !current_user.state.include?('teuteu')
     case message.quick_reply
     when 'go'
-      message.reply(
-        attachment: {
-          type: 'image',
-          payload: {
-            url: 'https://i.ytimg.com/vi/EjpJYaOQ7MY/hqdefault.jpg'
-          }
-        }
-      )
+      out_going_message.deliver(:go_teuteu)
+
       current_user.state += 'teuteu'
-
-      sleep(5)
-
       current_user.save
 
       out_going_message.deliver(:main_menu)
 
     when 'no'
-      message.reply(text: 'tu dis ça, parce que j\'ai tiré ta meuf ?')
-
-      message.typing_on
-      sleep(2)
-
-      message.reply(text: 'sans rancune mamene')
-
-      sleep(5)
+      out_going_message.deliver(:no_teuteu)
 
       current_user.state += 'teuteu'
       current_user.save
@@ -111,58 +73,15 @@ Bot.on :postback do |postback|
 
   case postback.payload
   when 'sal'
-    postback.reply(
-      attachment: {
-        type: 'image',
-        payload: {
-          url: 'https://media.giphy.com/media/ADL6Vi425PXUc/giphy.gif'
-        }
-      }
-    )
+    out_going_message.deliver(:sal)
 
-  sleep(3)
+    current_user.state += 'sal'
+    current_user.save
 
-  postback.typing_on
-
-  postback.reply(text: 'Cherche pas mamene, c\'est la mienne celle là' )
-
-  sleep(5)
-
-  current_user.state += 'sal'
-  current_user.save
-
-  out_going_message.deliver(:main_menu)
-
-  #main_menu(postback, current_user)
+    out_going_message.deliver(:main_menu)
 
   when 'tmtc'
-    postback.typing_on
-
-    postback.reply(text: 'Parce que c\'est toi, je vais te balancer une vanne de N°10')
-
-    postback.reply(text: 'Tu vois la petite beurette, visualise la bien ..!')
-
-    sleep(4)
-
-    postback.typing_on
-
-    postback.reply(text: 'bon tu lui demandes si elle veut un tour de magie, OKLM')
-
-    sleep(2)
-
-    postback.typing_on
-
-    postback.reply(text: 'Forcément, ça répond oui et là tu lui lâches :')
-
-    sleep(2)
-
-    postback.typing_on
-
-    postback.reply(text: '"ok j\'te baise et je disparais"')
-
-    postback.reply(text: 'TMTC mamene')
-
-    sleep(5)
+    out_going_message.deliver(:tmtc)
 
     current_user.state += 'tmtc'
     current_user.save
@@ -170,60 +89,6 @@ Bot.on :postback do |postback|
     out_going_message.deliver(:main_menu)
 
   when 'teuteu'
-    postback.reply(
-      text: 'Faut suivre l\'empereur pour ça mamene!',
-      quick_replies: [
-        {
-          content_type: 'text',
-          title: 'Montre moi la voie 👍',
-          payload: 'go',
-        },
-        {
-          content_type: 'text',
-          title: 'Oublie ! 👎',
-          payload: 'no',
-        },
-      ]
-    )
+    out_going_message.deliver(:teuteu)
   end
 end
-
-# def main_menu(kind, user)
-#   kind.reply(
-#     attachment: {
-#       type: 'template',
-#       payload: {
-#         template_type: 'button',
-#         text: 'T\'es là mamene, si si ! Qu\'est ce qu\'il te faut pour t\'ambiancer ?',
-#         buttons: buttons_payload(user)
-#       }
-#     }
-#   )
-# end
-
-# def buttons_payload(user)
-#   if user.state.include?('teuteu')
-#     [
-#       { type: 'postback', title: 'Du Saaaal 💩', payload: 'sal' },
-#       { type: 'postback', title: 'TMTC ⚡️', payload: 'tmtc' },
-#     ]
-#   else
-#     [
-#       { type: 'postback', title: 'Du Saaaal 💩', payload: 'sal' },
-#       { type: 'postback', title: 'TMTC ⚡️', payload: 'tmtc' },
-#       { type: 'postback', title: 'Du bon teuteu 🌿', payload: 'teuteu' },
-#     ]
-#   end
-# end
-
-# def pas_loue_message(message, user)
-#   message.typing_on
-
-#   message.reply(text: 'PAS LOUÉ')
-
-#   sleep(2)
-
-#   message.typing_on
-
-#   user.state = 'main_menu'
-# end
