@@ -64,6 +64,10 @@ Bot.on :message do |message|
 
       out_going_message.deliver(:main_menu)
     end
+  else
+    out_going_message.deliver(:malin)
+
+    out_going_message.deliver(:main_menu)
   end
 end
 

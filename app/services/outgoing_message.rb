@@ -108,6 +108,10 @@ attr_reader :message,
     sleep(5)
   end
 
+  def malin
+    message.reply(text: 't\'es un petit malin mamene, allez je te recrute dans la team du sal')
+  end
+
   def sal
     message.reply(
       attachment: {
