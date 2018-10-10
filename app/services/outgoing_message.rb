@@ -36,7 +36,7 @@ attr_reader :message,
         payload: {
           template_type: 'button',
           text: 'T\'es là mamene, si si ! Qu\'est ce qu\'il te faut pour t\'ambiancer ?',
-          "persona_id"=> 318552875394434,
+          # "persona_id"=> 318552875394434,
           buttons: buttons_payload(user)
 
         }
