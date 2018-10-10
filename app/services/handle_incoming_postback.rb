@@ -8,6 +8,9 @@ attr_reader :postback
   def perform
     current_user = FindOrCreateUser.new.perform(postback.sender['id'])
     out_going_message = OutgoingMessage.new(postback, current_user)
+    puts "======================="
+    puts "#{current_user.id}"
+    puts "======================="
 
     case postback.payload
     when 'sal'
