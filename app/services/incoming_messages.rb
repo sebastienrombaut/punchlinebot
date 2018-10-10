@@ -12,17 +12,17 @@ class IncomingMessages
     )
   end
 
-def pas_loue_message(user)
-  message.typing_on
+  def pas_loue_message(user)
+    message.typing_on
 
-  message.reply(text: 'PAS LOUÉ')
+    message.reply(text: 'PAS LOUÉ')
 
-  sleep(2)
+    sleep(2)
 
-  message.typing_on
+    message.typing_on
 
-  user.state = 'main_menu'
-end
+    user.state = 'main_menu'
+  end
 
   private
 
@@ -40,5 +40,4 @@ end
       ]
     end
   end
-
 end

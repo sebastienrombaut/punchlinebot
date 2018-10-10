@@ -6,10 +6,7 @@ attr_reader :message
   end
 
   def perform
-    begin current_user
-    rescue
-      current_user = FindOrCreateUser.new.perform(message.sender['id'])
-    end
+    current_user = FindOrCreateUser.new.perform(message.sender['id'])
 
     out_going_message = OutgoingMessage.new(message, current_user)
 
