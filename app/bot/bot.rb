@@ -10,7 +10,7 @@ Bot.deliver({
   message: {
     text: 'Human?'
   },
-  "persona_id" => "<318552875394434>"
+  "persona_id" => "318552875394434"
 }, access_token: ENV['ACCESS_TOKEN'])
 
 
